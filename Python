@@ -1,0 +1,54 @@
+dayofMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+def isLeapYear(year):
+    if year % 4 == 0:
+        dayofMonths[1] = 29
+    else:
+        dayofMonths[1] = 28
+    return dayofMonths
+
+def daysBetweenDates(y1, m1, d1, y2, m2, d2):
+    if y1 == y2:                                #If the year values are the same
+        if y1 % 4 == 0 or y2 % 4 == 0:          #Leap Year Test
+            dayofMonths[1] = 29
+        else:
+            dayofMonths[1] = 28
+
+        if m1 == m2:                            #If the months are in same year and the month values are the same
+            days = d2 - d1
+        else:
+            m = m1 - 1
+            number_days = dayofMonths[m] - d1
+            while m1 < m2 - 1:
+                number_days += dayofMonths[m1]
+                m1 += 1
+            days = number_days + d2
+            return days
+
+    for year in range(y1, y2 + 1):      #For loop to check each year in the range of values y1 and y2
+        if year % 4 == 0:               #Leap Year check
+            dayofMonths[1] = 29
+        else:
+            dayofMonths[1] = 28
+
+        if year == y1:                  #if year is the first year
+            m = m1 - 1
+            days = dayofMonths[m] - d1
+            while m1 < len(dayofMonths):
+                days += dayofMonths[m1]
+                m1 += 1
+            #print days
+        if year > y1:                   #if the year is greater than the first year and lower than the final year
+            if year < y2:
+                m1 = 0
+                while m1 < len(dayofMonths):
+                    days += dayofMonths[m1]
+                    m1 += 1
+                #print days
+        if year == y2:                  #if the year is equal to the final year
+            m1 = 0
+            while m1 < len(dayofMonths[0:m2]) - 1:
+                days += dayofMonths[m1]
+                m1 += 1
+            days = days + d2
+            return days
